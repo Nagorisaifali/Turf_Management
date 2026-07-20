@@ -46,13 +46,7 @@ export default function Navbar() {
                 Logout
               </button>
             ) : null}
-            <button
-              onClick={toggleTheme}
-              className="rounded-full border border-white/10 bg-white/10 p-2 text-slate-100"
-              aria-label="Toggle theme"
-            >
-              {theme === "dark" ? <FiSun /> : <FiMoon />}
-            </button>
+            
             <button
               onClick={() => setOpen((prev) => !prev)}
               className="rounded-full border border-white/10 bg-white/10 p-2 text-slate-100 md:hidden"
