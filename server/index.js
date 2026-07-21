@@ -1,4 +1,5 @@
 import crypto from "node:crypto";
+import { existsSync } from "node:fs";
 import fs from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -158,11 +159,17 @@ app.delete("/api/bookings/:id", requireAdmin, async (req, res, next) => {
   }
 });
 
-app.use(express.static(CLIENT_DIST));
-app.get("*", (req, res, next) => {
-  if (req.path.startsWith("/api")) return next();
-  res.sendFile(path.join(CLIENT_DIST, "index.html"));
-});
+if (existsSync(path.join(CLIENT_DIST, "index.html"))) {
+  app.use(express.static(CLIENT_DIST));
+  app.get("*", (req, res, next) => {
+    if (req.path.startsWith("/api")) return next();
+    res.sendFile(path.join(CLIENT_DIST, "index.html"));
+  });
+} else {
+  app.get("/", (req, res) => {
+    res.json({ ok: true, service: "Turf backend API" });
+  });
+}
 
 app.use((error, req, res, next) => {
   console.error(error);

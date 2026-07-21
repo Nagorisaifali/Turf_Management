@@ -52,6 +52,130 @@ From the `server/` directory:
 
 ## Render deployment
 
+You can deploy this project in two ways:
+
+- Recommended for this setup: deploy the backend as a Render **Web Service** and the frontend as a Render **Static Site**.
+- Alternative: deploy everything as one Render **Web Service** from the project root.
+
+## Option A: Backend Web Service + Frontend Static Site
+
+Use this option when you want the frontend and backend as separate Render services.
+
+### 1. Deploy the backend server
+
+1. Open the Render dashboard.
+2. Click `New`.
+3. Select `Web Service`.
+4. Connect your GitHub repository.
+5. Select the branch, usually `main`.
+
+Use these backend settings:
+
+```txt
+Runtime: Node
+Root Directory: Turf_Management/server
+Build Command: npm install && npm run build
+Start Command: npm start
+```
+
+If your GitHub repo root is already `Turf_Management`, use:
+
+```txt
+Root Directory: server
+```
+
+Add these backend environment variables:
+
+```txt
+ADMIN_USERNAME=Saif
+ADMIN_PASSWORD=Saif@78
+ADMIN_TOKEN=replace-this-with-a-long-random-secret
+CLIENT_ORIGIN=*
+NODE_VERSION=22.18.0
+```
+
+Click `Create Web Service`.
+
+After deploy, copy your backend URL. It will look like:
+
+```txt
+https://your-backend-name.onrender.com
+```
+
+Test the backend health URL:
+
+```txt
+https://your-backend-name.onrender.com/api/health
+```
+
+It should show:
+
+```json
+{ "ok": true }
+```
+
+### 2. Deploy the frontend static site
+
+1. In Render, click `New`.
+2. Select `Static Site`.
+3. Connect the same GitHub repository.
+4. Select the branch, usually `main`.
+
+Use these frontend settings:
+
+```txt
+Root Directory: Turf_Management/Client
+Build Command: npm install --include=optional && npm run build
+Publish Directory: dist
+```
+
+If your GitHub repo root is already `Turf_Management`, use:
+
+```txt
+Root Directory: Client
+```
+
+Add this frontend environment variable:
+
+```txt
+VITE_API_URL=https://your-backend-name.onrender.com/api
+```
+
+Replace `https://your-backend-name.onrender.com` with your real backend Web Service URL.
+
+Click `Create Static Site`.
+
+After frontend deploy, open:
+
+```txt
+https://your-frontend-name.onrender.com/admin
+```
+
+Login with:
+
+```txt
+Username: Saif
+Password: Saif@78
+```
+
+After successful login, the app redirects to:
+
+```txt
+/dashboard
+```
+
+### 3. Update backend CORS after frontend deploy
+
+After you know your frontend URL, go back to your backend Web Service environment variables and set:
+
+```txt
+CLIENT_ORIGIN=https://your-frontend-name.onrender.com
+```
+
+Then redeploy the backend. You can keep `CLIENT_ORIGIN=*` during testing, but using the exact frontend URL is better.
+
+## Option B: One Render Web Service
+
 This app should be deployed as one Render **Web Service**. The Express backend serves the API and also serves the built React frontend from `Client/dist`.
 
 ### 1. Push the project to GitHub
