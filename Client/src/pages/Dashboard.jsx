@@ -71,10 +71,10 @@ export default function Dashboard() {
     setIsFormOpen(false);
   };
 
-  const confirmSave = () => {
+  const confirmSave = async () => {
     const result = editingBooking
-      ? updateBooking({ ...pendingBooking, id: editingBooking.id, createdAt: editingBooking.createdAt })
-      : addBooking({ ...pendingBooking, createdAt: new Date().toISOString() });
+      ? await updateBooking({ ...pendingBooking, id: editingBooking.id, createdAt: editingBooking.createdAt })
+      : await addBooking({ ...pendingBooking, createdAt: new Date().toISOString() });
     showToast(result.message);
     if (result.ok) {
       setConfirmOpen(false);
@@ -84,8 +84,8 @@ export default function Dashboard() {
     }
   };
 
-  const handleDelete = (id) => {
-    const result = deleteBooking(id);
+  const handleDelete = async (id) => {
+    const result = await deleteBooking(id);
     showToast(result.message);
   };
 

@@ -1,0 +1,13 @@
+[
+  {
+    "customerName": "Saif",
+    "contactNumber": "7869043178",
+    "bookingDate": "2026-07-21",
+    "timeSlot": "6 AM - 7 AM",
+    "amountPaid": 500,
+    "bookingStatus": "Pending",
+    "notes": "",
+    "createdAt": "2026-07-21T09:54:59.035Z",
+    "id": "e64b1bbb-3619-4da2-861d-b9cfc4620cf5"
+  }
+]

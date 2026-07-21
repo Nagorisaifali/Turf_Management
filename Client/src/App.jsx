@@ -15,7 +15,8 @@ import { ThemeProvider } from "./context/ThemeContext";
 import { ToastProvider } from "./context/ToastContext";
 
 function ProtectedAdminRoute({ children }) {
-  const { isAdmin } = useBookingContext();
+  const { isAdmin, isLoading } = useBookingContext();
+  if (isLoading) return <div className="py-16 text-center text-slate-300">Loading...</div>;
   return isAdmin ? children : <Navigate to="/admin" replace />;
 }
 

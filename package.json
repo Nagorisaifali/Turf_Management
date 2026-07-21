@@ -1,0 +1,15 @@
+{
+  "name": "turf-management",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "workspaces": [
+    "Client",
+    "server"
+  ],
+  "scripts": {
+    "dev": "npm --workspace client run dev",
+    "build": "npm --workspace client run build",
+    "start": "npm --workspace turf-management-server start"
+  }
+}

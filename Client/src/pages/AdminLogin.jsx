@@ -9,13 +9,13 @@ export default function AdminLogin() {
   const navigate = useNavigate();
   const [form, setForm] = useState({ username: "", password: "" });
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    const ok = loginAdmin(form.username, form.password);
-    if (ok) {
+    try {
+      await loginAdmin(form.username, form.password);
       showToast("Admin login successful.");
       navigate("/dashboard");
-    } else {
+    } catch {
       showToast("Invalid admin credentials.");
     }
   };
