@@ -78,7 +78,7 @@ Use these settings:
 
 - Runtime: `Node`
 - Root Directory: `Turf_Management` if your repo contains this folder. Leave empty if the repo root is already `Turf_Management`.
-- Build Command: `npm install && npm run build`
+- Build Command: `npm install --include=optional && npm run build`
 - Start Command: `npm start`
 
 ### 4. Add environment variables
@@ -90,6 +90,7 @@ ADMIN_USERNAME=Saif
 ADMIN_PASSWORD=Saif@78
 ADMIN_TOKEN=replace-this-with-a-long-random-secret
 CLIENT_ORIGIN=*
+NODE_VERSION=22.18.0
 ```
 
 `ADMIN_TOKEN` should be a long private value. Example:
@@ -130,6 +131,22 @@ After successful login, the app redirects to:
 ```
 
 The admin can create, edit, delete, export, and print bookings from the dashboard.
+
+### If Render shows a Rolldown native binding error
+
+If Render fails with an error like:
+
+```txt
+Cannot find module '@rolldown/binding-linux-x64-gnu'
+```
+
+Use this build command:
+
+```txt
+npm install --include=optional && npm run build
+```
+
+Then redeploy with Render's `Clear build cache & deploy` option. This forces Render to reinstall the Linux native optional package used by Vite/Rolldown.
 
 ### Important storage note
 
